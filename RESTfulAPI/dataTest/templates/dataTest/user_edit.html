@@ -1,0 +1,28 @@
+<!-- user_edit.html -->
+<html>
+<head>
+    <title>Edit User</title>
+</head>
+<body>
+    <h1>Edit User</h1>
+    <form method="post", action="{%url 'user_select' user.id %}">
+        {% csrf_token %}
+        <label for="id_name">Name:</label>
+        <input type="text" name="name" id="id_name" value="{{ user.name }}" required>
+        <br>
+        <label for="id_address">Address:</label>
+        <textarea name="address" id="id_address" required>{{ user.address }}</textarea>
+        <br>
+        <label for="id_phone_number">Phone Number:</label>
+        <input type="text" name="phone_number" id="id_phone_number" value="{{ user.phone_number }}" required>
+        <br>
+        <label for="id_job_position">Job Position:</label>
+        <input type="text" name="job_position" id="id_job_position" value="{{ user.job_position }}" required>
+        <br>
+        <label for="id_age">Age:</label>
+        <input type="number" name="age" id="id_age" value="{{ user.age }}" required>
+        <br>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>
