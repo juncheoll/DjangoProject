@@ -3,9 +3,12 @@
 <html>
 <head>
     <title>User List</title>
+    <form method="post" action="{% url 'user_create' %}">
+        {% csrf_token %}
+        <button type="submit">추가</button>
+    </form>
     <style>
         /* 스타일 추가: 사용자 정보를 각각의 박스로 묶습니다. */
-        /* 꺄오오오오오오오옹 */
         .user-box {
             border: 1px solid #ccc;
             padding: 10px;

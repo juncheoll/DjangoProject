@@ -1,0 +1,16 @@
+<!-- dataTest/templates/dataTest/user_create.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create User</title>
+</head>
+<body>
+    <h1>Create User</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">추가</button>
+    </form>
+    <a href="{% url 'user_list' %}">돌아가기</a>
+</body>
+</html>
