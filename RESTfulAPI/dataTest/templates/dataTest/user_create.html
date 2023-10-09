@@ -1,5 +1,8 @@
 <!-- dataTest/templates/dataTest/user_create.html -->
+<<<<<<< HEAD
 
+=======
+>>>>>>> cc4382d98e3358f919e129c8dbf401a0976fe4ff
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +10,7 @@
 </head>
 <body>
     <h1>Create User</h1>
+<<<<<<< HEAD
     
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -19,3 +23,13 @@
     <a href="{% url 'user_list' %}">목록으로 돌아가기</a> <!-- 목록 페이지로 돌아가는 링크 -->
 </body>
 </html>
+=======
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">추가</button>
+    </form>
+    <a href="{% url 'user_list' %}">돌아가기</a>
+</body>
+</html>
+>>>>>>> cc4382d98e3358f919e129c8dbf401a0976fe4ff

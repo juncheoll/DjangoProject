@@ -3,6 +3,10 @@
 <html>
 <head>
     <title>User List</title>
+    <form method="post" action="{% url 'user_create' %}">
+        {% csrf_token %}
+        <button type="submit">추가</button>
+    </form>
     <style>
         .user-box {
             border: 1px solid #ccc;

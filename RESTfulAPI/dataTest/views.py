@@ -56,6 +56,7 @@ def user_edit(request, pk):
     context = {'user': user, 'form' : form}
     return render(request, 'dataTest/user_edit.html', context)
 
+<<<<<<< HEAD
 
 def user_create(request):
     if request.method == "POST":
@@ -68,3 +69,15 @@ def user_create(request):
     
     context = {'form': form}
     return render(request, 'dataTest/user_create.html', context)
+=======
+def user_create(request):
+    if request.method == "POST":
+        form = UserEditForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user_list')
+    else:
+        form = UserEditForm()
+        
+        return render(request, 'dataTest/user_create.html', {'form' : form })
+>>>>>>> cc4382d98e3358f919e129c8dbf401a0976fe4ff
