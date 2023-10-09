@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Edit User</h1>
-    <form method="post", action="{%url 'user_select' user.id %}" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <label for="id_name">Name:</label>

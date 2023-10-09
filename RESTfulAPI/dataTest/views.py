@@ -13,7 +13,6 @@ def user_list(request):
     context = {'users': query_set}
     return render(request, 'dataTest/user_list.html', context)
     
-
 def user_select(request, pk):
     user = get_object_or_404(Users, pk=pk)
     
@@ -22,26 +21,9 @@ def user_select(request, pk):
         context = {'user': user}
         return render(request, 'dataTest/user_detail.html', context)
     
-    elif request.method == "PUT":
-        update_data = JSONParser().parse(request)
-        serializer = userSerializer(object, data= update_data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
-    
     elif request.method == "DELETE":
         object.delete()
         return HttpResponse(status=204)
-    
-    elif request.method == "POST":
-        form = UserEditForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('user_list')
-        else:
-            context = {'user': user, 'form' : form}
-            return render(request, 'dataTest/user_edit.html', context)
    
 
 def user_edit(request, pk):
@@ -56,7 +38,6 @@ def user_edit(request, pk):
     context = {'user': user, 'form' : form}
     return render(request, 'dataTest/user_edit.html', context)
 
-<<<<<<< HEAD
 
 def user_create(request):
     if request.method == "POST":
@@ -69,15 +50,3 @@ def user_create(request):
     
     context = {'form': form}
     return render(request, 'dataTest/user_create.html', context)
-=======
-def user_create(request):
-    if request.method == "POST":
-        form = UserEditForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('user_list')
-    else:
-        form = UserEditForm()
-        
-        return render(request, 'dataTest/user_create.html', {'form' : form })
->>>>>>> cc4382d98e3358f919e129c8dbf401a0976fe4ff
