@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers, serializers, viewsets
 from dataTest import views
 
 from django.conf import settings
@@ -25,12 +24,10 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('users/', views.user_list, name='user_list'),
-    path('users/create/', views.user_create, name='user_create'),
-    path('users/<int:pk>',views.user_select, name='user_select'),
-    path('users/edit/<int:pk>/', views.user_edit, name='user_edit'),
+    path('menu/', views.menu_list, name='menu_list'),
+    path('menu/create/', views.menu_create, name='menu_create'),
+    path('menu/<int:pk>',views.menu_select, name='menu_select'),
+    path('menu/edit/<int:pk>/', views.menu_edit, name='menu_edit'),
 ]
 
 if settings.DEBUG:

@@ -1,7 +1,7 @@
 from django import forms
-from .models import Users
+from .models import Menu
 
-class UserEditForm(forms.ModelForm):
+class MenuForm(forms.ModelForm):
     class Meta:
-        model = Users
-        fields = ['name', 'address', 'phone_number', 'job_position', 'age', 'image']
+        model = Menu
+        fields = ['category', 'name', 'cost', 'image']

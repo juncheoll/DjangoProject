@@ -1,0 +1,19 @@
+<!-- menu_detail.html-->
+<html>
+<head>
+    <title>Menu Detail</title>
+</head>
+<body>
+    <h1>Menu Detail</h1>
+    <p>Menu ID: {{ menu.id }}</p>
+    <p>Category: {{ menu.categroy }}</p>
+    <p>Name: {{ menu.name }}</p>
+    <p>Cost: {{ menu.cost }}</p>
+
+    <form method="post" action="{% url 'menu_edit' menu.id %}">
+        {% csrf_token %}
+        <button type="submit">수정</button>
+    </form>
+
+</body>
+</html>   
