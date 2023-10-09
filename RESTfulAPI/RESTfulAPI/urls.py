@@ -19,12 +19,19 @@ from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
 from dataTest import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('users/', views.user_list, name='user_list'),
+    path('users/create/', views.user_create, name='user_create'),
     path('users/<int:pk>',views.user_select, name='user_select'),
-    path('users/<int:pk>/edit/', views.user_edit, name='user_edit'),
+    path('users/edit/<int:pk>/', views.user_edit, name='user_edit'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

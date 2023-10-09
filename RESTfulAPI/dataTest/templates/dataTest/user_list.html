@@ -4,7 +4,6 @@
 <head>
     <title>User List</title>
     <style>
-        /* 스타일 추가: 사용자 정보를 각각의 박스로 묶습니다. */
         .user-box {
             border: 1px solid #ccc;
             padding: 10px;
@@ -14,6 +13,9 @@
 </head>
 <body>
     <h1>User List</h1>
+
+    <a href="{% url 'user_create' %}">추가</a>
+    
     {% for user in users %}
     <div class="user-box">
         <h2>User ID: {{ user.id }}</h2>
@@ -23,6 +25,14 @@
         <p>Job Position: {{ user.job_position }}</p>
         <p>Age: {{ user.age }}</p>
         <p>Registration Date: {{ user.dateTimeOfPosting }}</p>
+        <p>image: {{ user. }}</p>
+
+        <!-- 이미지 표시 -->
+        {% if user.image %}
+            <img src="{{ user.image.url }}" alt="User Image" width="150">
+        {% else %}
+            <p>No image available</p>
+        {% endif %}
 
         <form method="post" action="{% url 'user_edit' user.id %}">
             {% csrf_token %}

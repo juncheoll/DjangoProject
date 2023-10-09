@@ -1,0 +1,21 @@
+<!-- dataTest/templates/dataTest/user_create.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create User</title>
+</head>
+<body>
+    <h1>Create User</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {{ form.as_p }} <!-- 모든 폼 필드를 자동으로 렌더링 -->
+
+        <button type="submit">저장</button>
+    </form>
+    
+    <a href="{% url 'user_list' %}">목록으로 돌아가기</a> <!-- 목록 페이지로 돌아가는 링크 -->
+</body>
+</html>

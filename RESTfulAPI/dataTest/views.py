@@ -48,10 +48,23 @@ def user_edit(request, pk):
     user = get_object_or_404(Users, pk=pk)
     
     if request.method == "POST":
-        form = UserEditForm(request.POST, instance=user)
+        form = UserEditForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return redirect('user_list')
         
     context = {'user': user, 'form' : form}
     return render(request, 'dataTest/user_edit.html', context)
+
+
+def user_create(request):
+    if request.method == "POST":
+        form = UserEditForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('user_list')  # 사용자 추가 후 목록 페이지로 리디렉션
+    else:
+        form = UserEditForm()
+    
+    context = {'form': form}
+    return render(request, 'dataTest/user_create.html', context)
