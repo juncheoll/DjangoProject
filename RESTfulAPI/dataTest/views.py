@@ -48,3 +48,8 @@ def menu_create(request):
     
     context = {'form': form}
     return render(request, 'dataTest/menu_create.html', context)
+
+def order_recode(request):
+    # 주문 내역을 처리하는 뷰 내용을 작성합니다.
+    # 주문 내역을 데이터베이스에 저장하거나, 웹소켓을 통해 실시간 업데이트를 수행할 수 있습니다.
+    return render(request, 'dataTest/order_recode.html')

@@ -28,6 +28,7 @@ urlpatterns = [
     path('menu/create/', views.menu_create, name='menu_create'),
     path('menu/<int:pk>',views.menu_select, name='menu_select'),
     path('menu/edit/<int:pk>/', views.menu_edit, name='menu_edit'),
+    path('order_recode/', views.order_recode, name='order_recode'),
 ]
 
 if settings.DEBUG:

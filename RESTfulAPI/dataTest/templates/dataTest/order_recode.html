@@ -1,0 +1,29 @@
+<!-- dataTest/templates/dataTest/order_recode.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Record</title>
+</head>
+<body>
+    <h1>Order Record</h1>
+
+    <textarea id="order-info" rows="10" cols="40" readonly></textarea>
+
+    <script>
+        const orderInfoTextarea = document.getElementById('order-info');
+
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/order_recode/');
+
+        socket.onmessage = (event) => {
+            const orderInfo = event.data;
+            // 주문 정보를 텍스트 박스에 추가
+            orderInfoTextarea.value += orderInfo + '\n';
+        };
+
+        socket.onclose = () => {
+            // 웹소켓 연결이 닫혔을 때 처리
+            console.log('WebSocket connection closed');
+        };
+    </script>
+</body>
+</html>

@@ -41,7 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'dataTest',
+    'channels',
 ]
+
+ASGI_APPLICATION = 'RESTfulAPI.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',  # In-memory 레이어 예제
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,14 +1,45 @@
 <!-- dataTest/templates/dataTest/menu_list.html -->
 <!DOCTYPE html>
 <html>
+    
 <head>
     <title>Menu List</title>
 
     <style>
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 3x3 그리드 형태로 배치 */
+            grid-gap: 10px; /* 그리드 아이템 간격 조절 */
+        }
+
         .menu-box {
             border: 1px solid #ccc;
             padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            text-align: center;
+        }
+        /* 선택된 메뉴 목록 스타일 */
+        .selected-menu-box {
+            border: 1px solid #ccc;
+            padding: 10px;
             margin: 10px;
+            display: flex; /* 가로로 나열하기 위해 flex 사용 */
+        }
+
+        .selected-menu-box ul {
+            list-style: none; /* 목록 마커 제거 */
+            display: flex; /* 가로로 나열하기 위해 flex 사용 */
+            margin: 0;
+            padding: 0;
+        }
+
+        .selected-menu-box li {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            margin-right: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -19,27 +50,83 @@
         {% csrf_token %}
         <button type="submit">메뉴 추가</button>
     </form>
-    
-    {% for menu in menus %}
-    <div class="menu-box">
-        <h2>Menu ID: {{ menu.id }}</h2>
-        <p>Category: {{ menu.category }}</p>
-        <p>Name: {{ menu.name }}</p>
-        <p>Cost: {{ menu.cost }}</p>
-        <p>image: {{ menu. }}</p>
 
-        <!-- 이미지 표시 -->
-        {% if menu.image %}
-            <img src="{{ menu.image.url }}" alt="Menu Image" width="150">
-        {% else %}
-            <p>No image available</p>
-        {% endif %}
-
-        <form method="post" action="{% url 'menu_edit' menu.id %}">
-            {% csrf_token %}
-            <button type="submit">수정</button>
-        </form>
+    <div class="selected-menu-box">
+        <h2>선택된 메뉴 목록</h2>
+        <ul id="selected-menu-list">
+            <!-- 선택된 메뉴가 여기에 추가됩니다 -->
+        </ul>
+        <button id="order-button">주문하기</button>
     </div>
-    {% endfor %}
+
+    <!-- 3x3 그리드 형태로 메뉴 목록을 표시할 부분 추가 -->
+    <div class="menu-grid">
+        {% for menu in menus %}
+            <div class="menu-box">
+                <!-- 메뉴 정보 표시 -->
+                <h2>Menu ID: {{ menu.id }}</h2>
+                <p>Category: {{ menu.category }}</p>
+                <p>Name: {{ menu.name }}</p>
+                <p>Cost: {{ menu.cost }}</p>
+                <!-- 이미지 표시 -->
+                {% if menu.image %}
+                    <img src="{{ menu.image.url }}" alt="Menu Image" width="150">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+                <br>
+                <button class="select-menu-button" data-menu-id="{{ menu.id }}">선택</button>
+
+                <form method="post" action="{% url 'menu_edit' menu.id %}">
+                    {% csrf_token %}
+                    <button type="submit">수정</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+    // JavaScript 코드를 사용하여 메뉴 선택 및 주문 기능을 추가합니다.
+    const selectedMenuList = document.getElementById('selected-menu-list');
+    const orderButton = document.getElementById('order-button');
+
+    const selectButtons = document.querySelectorAll('.select-menu-button');
+
+    selectButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+            const menuId = event.target.getAttribute('data-menu-id');
+            const menuName = event.target.parentNode.querySelector('p:nth-child(3)').textContent;
+            // 선택된 메뉴를 목록에 추가합니다.
+            const menuItem = document.createElement('li');
+            menuItem.textContent = `${menuName} (ID: ${menuId})`;
+            selectedMenuList.appendChild(menuItem);
+        });
+    });
+
+    orderButton.addEventListener('click', () => {
+        // 주문 버튼을 눌렀을 때 주문 정보를 처리하는 코드를 추가합니다.
+        const selectedMenus = Array.from(selectedMenuList.children).map(item => item.textContent);
+        const orderInfo = selectedMenus.join('\n'); // 선택된 메뉴 목록을 텍스트로 합침
+        // 주문 정보를 서버로 보내거나 웹소켓을 통해 실시간 업데이트를 수행할 수 있습니다.
+        // 웹소켓을 통해 서버로 주문 정보 전송
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/order_recode/'); // 웹소켓 URL
+
+        socket.onopen = () => {
+            // 웹소켓 연결이 열렸을 때 주문 정보를 전송
+            socket.send(JSON.stringify({ order_info: orderInfo }));
+        };
+
+        socket.onmessage = (event) => {
+            // 서버에서의 응답 처리 (주문 완료 메시지 등)
+            const response = JSON.parse(event.data);
+            console.log(response.message);
+            // 추가적인 실시간 업데이트 작업 수행 가능
+        };
+
+        socket.onclose = () => {
+            // 웹소켓 연결이 닫혔을 때 처리
+        };
+    });
+    </script>
 </body>
 </html>
